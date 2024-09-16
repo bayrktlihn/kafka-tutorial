@@ -1,0 +1,18 @@
+kafka-topics --list --bootstrap-server localhost:9092
+kafka-topics --describe --topic topic1 --bootstrap-server localhost:9092
+kafka-topics --create --topic first_topic --partitions 1 --replication-factor 1 --bootstrap-server localhost:9092
+kafka-topics --delete --topic topic1 --bootstrap-server localhost:9092
+
+kafka-console-producer --topic first_topic --bootstrap-server localhost:9092 --property "parse.key=true" --property "key.separator=:"
+
+kafka-console-consumer --topic first_topic --bootstrap-server localhost:9092 --group <GRUOP_ID>  --from-beginning
+
+kafka-consumer-groups --list --bootstrap-server localhost:9092
+kafka-consumer-groups --describe --group my-consumer-group --bootstrap-server localhost:9092
+kafka-consumer-groups --delete --group my-consumer-group --bootstrap-server localhost:9092
+
+kafka-broker-api-versions --bootstrap-server localhost:9092
+
+
+docker-compose exec kafka-1 /opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+docker-compose exec kafka-1 /opt/bitnami/kafka/bin/kafka-topics.sh --describe --topic topic1 --bootstrap-server localhost:9092
