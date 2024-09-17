@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class ProducerExample {
     public static void main(String[] args) {
         Properties properties = new Properties();
-        properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "192.168.0.100:9092");
+        properties.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "host.docker.internal:9092");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 //        properties.put(ProducerConfig.ACKS_CONFIG, "1");
-//        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, RoundRobinPartitioner.class.getName());
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, RoundRobinPartitioner.class.getName());
 
 
         Scanner scanner = new Scanner(System.in);
@@ -30,7 +30,7 @@ public class ProducerExample {
         String value = scanner.nextLine();
         while (value != null) {
             System.out.println("typed "+value);
-            kafkaProducer.send(new ProducerRecord<>("topic1",2,"1", value), (metadata, exception) -> {
+            kafkaProducer.send(new ProducerRecord<>("topic1","1", value), (metadata, exception) -> {
                 if (exception != null) {
                     log.info("{}", exception);
                 } else {
